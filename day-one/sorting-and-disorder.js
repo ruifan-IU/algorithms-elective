@@ -9,7 +9,6 @@ function quicksort(arr, lo, hi) {
 }
 
 function partition(arr, lo, hi) {
-  //Lomuto partition
   const pivot = hi;
 
   let left = lo;
@@ -28,18 +27,6 @@ function partition(arr, lo, hi) {
 
   return left;
 }
-
-const arr = [3, 2, 1, 5, 6, 4];
-
-console.log(partition(arr, 0, arr.length - 1));
-
-console.log(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]);
-
-quicksort(arr, 0, arr.length - 1);
-console.log(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]);
-
-// quicksort(arr, 0, arr.length - 1);
-// console.log(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]);
 
 // Heap Sort
 // Some potentially helpful functions are provided below
@@ -72,12 +59,62 @@ function lis(seq) {}
 // (please complete heap sort and disorder first)
 
 function createSort(partition) {
-  return function quicksort(arr, lo, hi) {};
+  return function quicksort(arr, lo, hi) {
+    if (lo < hi) {
+      const pivot = partition(arr, lo, hi);
+
+      quicksort(arr, lo, pivot - 1);
+      quicksort(arr, pivot + 1, hi);
+    }
+  };
 }
 
-function lomutoPartion() {}
+function lomutoPartition(arr, low, high) {
+  const pivot = high;
+
+  let left = low;
+  let right = low;
+
+  while (right < pivot) {
+    if (arr[left] <= arr[pivot]) left++;
+    else if (arr[right] <= arr[pivot]) swap(arr, left, right);
+
+    right++;
+  }
+  swap(arr, left, pivot);
+
+  return left;
+}
 
 function hoarePartition() {}
 
-const quicksortLomuto = createSort(lomutoPartion);
+const quicksortLomuto = createSort(lomutoPartition);
 const quicksortHoare = createSort(hoarePartition);
+
+const arr = [3, 2, 1, 5, 6, 4, 5, 6, 9, 0];
+
+// console.log(lomutoPartition(arr, 0, arr.length - 1));
+
+// console.log(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]);
+
+// lomutoPartition(arr, 0, 2);
+
+// console.log(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]);
+
+// lomutoPartition(arr, 4, 5);
+
+// console.log(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]);
+
+quicksortLomuto(arr, 0, arr.length - 1);
+console.log(
+  arr[0],
+  arr[1],
+  arr[2],
+  arr[3],
+  arr[4],
+  arr[5],
+  arr[6],
+  arr[7],
+  arr[8],
+  arr[9]
+);
